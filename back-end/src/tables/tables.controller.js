@@ -88,7 +88,6 @@ async function isOccupied(req, res, next) {
     const { reservation_id } = req.query;
     const { table_id } = req.params;
     const { available } = await services.getAvailable(table_id, reservation_id)
-    console.log(available);
     if (available) {
         next({ status: 400, message: "Table must be occupied" });
     }
