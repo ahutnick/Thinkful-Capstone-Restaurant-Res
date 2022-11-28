@@ -52,19 +52,6 @@ async function resExists(req, res, next) {
     }
 }
 
-async function resQueryExists(req, res, next) {
-    if (!req.query || !req.query.reservation_id) {
-        next({ status: 400, message: "No reservation_id provided" });
-    }
-    const { reservation_id } = req.query
-    const reservation = await resServices.read(reservation_id);
-    if (reservation) {
-        next()
-    } else if (reservation_id) {
-        next({ status: 404, message: `Reservation ${reservation_id} not found` });
-    }
-}
-
 async function resTableValidations(req, res, next) {
     const errors = [];
     const { reservation_id } = req.body.data;
@@ -87,10 +74,10 @@ async function resTableValidations(req, res, next) {
 async function isOccupied(req, res, next) {
     const { reservation_id } = req.query;
     const { table_id } = req.params;
-    const { available } = await services.getAvailable(table_id, reservation_id)
+    const { available } = await services.getAvailable(table_id, reservation_id ? reservation_id : null);
     if (available) {
-        next({ status: 400, message: "Table must be occupied" });
-    }
+        next({ status: 400, message: "Table is not occupied" });
+    } 
     next();
 
 }
@@ -141,8 +128,8 @@ async function read(req, res, next) {
 async function makeAvailable(req, res, next) {
     const { reservation_id } = req.query;
     const { table_id } = req.params;
-    await services.makeAvailable(table_id, reservation_id);
-    res.sendStatus(204);
+    await services.makeAvailable(table_id, reservation_id ? reservation_id : null);
+    res.sendStatus(200);
 }
 
 module.exports = {
@@ -150,5 +137,5 @@ module.exports = {
     list: [asyncErrorBoundary(list)],
     seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), asyncErrorBoundary(seat)],
     read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],
-    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resQueryExists), asyncErrorBoundary(isOccupied), asyncErrorBoundary(makeAvailable)],
+    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(isOccupied), asyncErrorBoundary(makeAvailable)],
 }

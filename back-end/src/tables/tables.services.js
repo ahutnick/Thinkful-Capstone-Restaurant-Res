@@ -47,19 +47,36 @@ function getCapacity(table_id) {
         .first()
 }
 
-function getAvailable(table_id, reservation_id) {
-    return knex("res_tables as rt")
-        .select("rt.available")
-        .where("rt.table_id", table_id)
-        .andWhere("rt.reservation_id", reservation_id)
-        .first()
+function getAvailable(table_id, reservation_id = null) {
+    if (reservation_id) {
+        return knex("res_tables as rt")
+            .select("rt.available")
+            .where("rt.table_id", table_id)
+            .andWhere("rt.reservation_id", reservation_id)
+            .first()
+    } else {
+        return knex("res_tables as rt")
+            .select("rt.available")
+            .where("rt.table_id", table_id)
+            .first()
+            .then((result) => {
+                return result ? result : { available: true };
+            })
+    }
+    
 }
 
-function makeAvailable(table_id, reservation_id) {
-    return knex("res_tables")
-        .where({ table_id: table_id })
-        .andWhere({ reservation_id: reservation_id })
-        .update({ available: true })     
+function makeAvailable(table_id, reservation_id = null) {
+    if (reservation_id) {
+        return knex("res_tables")
+            .where({ table_id: table_id })
+            .andWhere({ reservation_id: reservation_id })
+            .update({ available: true })
+    } else {
+        return knex("res_tables")
+            .where({ table_id: table_id })
+            .update({ available: true })
+    } 
 }
 
 /* function res_table_list({ res_table_id }) {
