@@ -72,10 +72,12 @@ function makeAvailable(table_id, reservation_id = null) {
             .where({ table_id: table_id })
             .andWhere({ reservation_id: reservation_id })
             .update({ available: true })
+            .returning("*")
     } else {
         return knex("res_tables")
             .where({ table_id: table_id })
             .update({ available: true })
+            .returning("*")
     } 
 }
 

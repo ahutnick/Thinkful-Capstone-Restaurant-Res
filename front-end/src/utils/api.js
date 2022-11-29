@@ -116,14 +116,15 @@ export async function seatTable(table_id, data, signal) {
   return await fetchJson(url, options);
 }
 
-export async function makeAvailable(table_id, params) {
-  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`)
-  Object.entries(params).forEach(([key, value]) =>
+export async function makeAvailable(table_id, params, reservation_date) {
+  const url = new URL(`${API_BASE_URL}/tables/${table_id}/seat`);
+  Object.entries(params).forEach(([key, value]) => 
     url.searchParams.append(key, value.toString())
   );
   const options = {
     method: "DELETE",
     headers
   };
-  return await fetchJson(url, options);
+  await fetchJson(url, options);
+  return listTables({reservation_date})
 }

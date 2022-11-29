@@ -88,7 +88,11 @@ function getDate() {
 }
 
 async function create(req, res, next) {
-    const data = await services.create(req.body.data)
+    const { table_name, capacity } = req.body.data;
+    const data = await services.create({ table_name, capacity })
+    if (req.body.data.reservation_id) {
+        await seatService(req.body.data.reservation_id, data.table_id);
+    }
     res.status(201).json({ data });
 }
 
@@ -105,8 +109,12 @@ async function list(req, res, next) {
 async function seat(req, res, next) {
     const reservation_id = req.body.data.reservation_id;
     const table_id = req.params.table_id;
-    const data = await services.seat({ reservation_id, table_id, available: false })
+    const data = await seatService(reservation_id, table_id);
     res.json({ data })
+}
+
+async function seatService(reservation_id, table_id) {
+    return await services.seat({ reservation_id, table_id, available: false });
 }
 
 async function listAvailability(req, res, next) {
@@ -128,12 +136,12 @@ async function read(req, res, next) {
 async function makeAvailable(req, res, next) {
     const { reservation_id } = req.query;
     const { table_id } = req.params;
-    await services.makeAvailable(table_id, reservation_id ? reservation_id : null);
-    res.sendStatus(200);
+    const data = await services.makeAvailable(table_id, reservation_id ? reservation_id : null);
+    res.json({data});
 }
 
 module.exports = {
-    create: [hasOnlyValidProperties(VALID_PROPERTIES), hasRequiredProperties, nameProperLength, isNonzeroNumber, asyncErrorBoundary(create)],
+    create: [hasOnlyValidProperties([...VALID_PROPERTIES, "reservation_id"] ), hasRequiredProperties, nameProperLength, isNonzeroNumber, asyncErrorBoundary(create)],
     list: [asyncErrorBoundary(list)],
     seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), asyncErrorBoundary(seat)],
     read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],

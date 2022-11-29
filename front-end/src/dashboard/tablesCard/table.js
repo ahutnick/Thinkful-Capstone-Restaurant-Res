@@ -1,20 +1,16 @@
-import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import React from "react";
 import { makeAvailable } from "../../utils/api";
-import {ErrorAlert} from "../../layout/ErrorAlert";
 
-function Table({ table }) {
+function Table({ table, currentDate, setFinishError, setTables }) {
     const { table_id, table_name, capacity, available, reservation_id } = table;
-    const [ finishError, setFinishError ] = useState(null);
-    const history = useHistory();
 
     const finishTable = async (event) => {
         event.preventDefault();
         setFinishError(null);
-        if (window.confirm(`Free table ${table_name}?`)) {
+        if (window.confirm(`${table_name}: Is this table ready to seat new guests?`)) {
             try {
-                await makeAvailable(table_id, { reservation_id });
-                history.go(0);
+                const tableArray = await makeAvailable(table_id, { reservation_id }, currentDate);
+                setTables(tableArray);
             } catch(error) {
                 setFinishError(error);
             }
@@ -23,7 +19,6 @@ function Table({ table }) {
 
     return (
         <>
-            { finishError ? <tr><ErrorAlert error={finishError} /></tr> : null }
             <tr>
                 <td>{ table_name }</td>
                 <td>{ capacity }</td>

@@ -79,7 +79,7 @@ function Dashboard({ date }) {
             </div>
             <div className="card-body">
               <ErrorAlert error={tablesError} />
-              <TablesTable tables={tables} />
+              <TablesTable tables={tables} currentDate={currentDate} setTables={setTables} />
             </div>
           </div>
         </div>

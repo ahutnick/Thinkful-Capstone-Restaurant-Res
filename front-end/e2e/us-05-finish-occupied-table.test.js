@@ -83,6 +83,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
       await page.click(finishButtonSelector);
 
       await page.waitForResponse((response) => {
+        console.log(response.url());
         return response.url().endsWith(`/tables`);
       });
 
