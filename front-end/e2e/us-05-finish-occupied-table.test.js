@@ -84,7 +84,7 @@ describe("US-05 - Finish an occupied table - E2E", () => {
 
       await page.waitForResponse((response) => {
         console.log(response.url());
-        return response.url().endsWith(`/tables`);
+        return response.url().includes(`reservation_date`);
       });
 
       await page.screenshot({
