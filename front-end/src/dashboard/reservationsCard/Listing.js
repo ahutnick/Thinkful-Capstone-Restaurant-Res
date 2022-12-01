@@ -9,7 +9,12 @@ function Listing({reservation}) {
             <td>{reservation.mobile_number}</td>
             <td>{reservation.reservation_time}</td>
             <td>{reservation.people}</td>
-            <td><a className="btn btn-info" href={`/reservations/${reservation.reservation_id}/seat`} role="button">Seat</a></td>
+            <td data-reservation-id-status={reservation.reservation_id}>
+                {reservation.status}
+            </td>
+            <td>
+                {reservation.status === 'booked' ? <a className="btn btn-info" href={`/reservations/${reservation.reservation_id}/seat`} role="button">Seat</a> : null}
+            </td>
         </tr>
     )
 }

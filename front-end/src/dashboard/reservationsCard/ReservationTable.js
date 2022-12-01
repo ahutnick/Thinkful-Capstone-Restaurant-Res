@@ -12,6 +12,7 @@ function ReservationTable({reservations}) {
                     <th>Mobile Number</th>
                     <th>Time</th>
                     <th>Party</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
