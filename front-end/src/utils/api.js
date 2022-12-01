@@ -124,5 +124,5 @@ export async function makeAvailable(table_id, data, reservation_date) {
     body: JSON.stringify({ data }),
   };
   await fetchJson(url, options);
-  return listTables({reservation_date})
+  return [await listReservations({date: reservation_date}), await listTables({reservation_date})]
 }

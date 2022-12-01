@@ -1,7 +1,8 @@
 import React from "react";
 import { makeAvailable } from "../../utils/api";
 
-function Table({ table, currentDate, setFinishError, setTables }) {
+
+function Table({ table, currentDate, setFinishError, setTables, setReservations }) {
     const { table_id, table_name, capacity, available, reservation_id } = table;
 
     const finishTable = async (event) => {
@@ -9,8 +10,9 @@ function Table({ table, currentDate, setFinishError, setTables }) {
         setFinishError(null);
         if (window.confirm(`${table_name}: Is this table ready to seat new guests?`)) {
             try {
-                const tableArray = await makeAvailable(table_id, { reservation_id }, currentDate);
-                setTables(tableArray);
+                const data = await makeAvailable(table_id, { reservation_id }, currentDate);
+                setReservations(data[0]);
+                setTables(data[1]);
             } catch(error) {
                 setFinishError(error);
             }

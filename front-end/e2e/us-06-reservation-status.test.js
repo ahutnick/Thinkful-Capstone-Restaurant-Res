@@ -119,7 +119,7 @@ describe("US-06 - Reservation status - E2E", () => {
       await page.click(finishButtonSelector);
 
       await page.waitForResponse((response) => {
-        return response.url().endsWith(`/tables`);
+        return response.url().includes(`/tables`);
       });
 
       await page.screenshot({

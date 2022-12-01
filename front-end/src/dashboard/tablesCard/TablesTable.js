@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Table from "./table";
 import ErrorAlert from "../../layout/ErrorAlert";
 
-function TablesTable({ tables, currentDate, setTables }) {
+function TablesTable({ tables, currentDate, setTables, setReservations }) {
     const [finishError, setFinishError] = useState(null);
 
     return (
@@ -19,7 +19,7 @@ function TablesTable({ tables, currentDate, setTables }) {
                     </tr>
                 </thead>
                 <tbody>
-                    {tables.map((table) => <Table key={`table-${table.table_id}`} table={table} currentDate={currentDate} setFinishError={setFinishError} setTables={setTables} />)}
+                    {tables.map((table) => <Table key={`table-${table.table_id}`} table={table} currentDate={currentDate} setFinishError={setFinishError} setTables={setTables} setReservations={setReservations} />)}
                 </tbody>
             </table>
         </>
