@@ -153,9 +153,9 @@ async function read(req, res, next) {
 async function makeAvailable(req, res, next) {
     const { reservation_id } = req.body.data;
     const { table_id } = req.params;
-    await services.makeAvailable(table_id, reservation_id);
+    const data = await services.makeAvailable(table_id, reservation_id);
     await resServices.updateStatus(reservation_id, "finished");
-    res.sendStatus(200);
+    res.status(200).json(data);
 }
 
 module.exports = {
