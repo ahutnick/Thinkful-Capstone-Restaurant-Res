@@ -45,7 +45,8 @@ async function resExists(req, res, next) {
     }
     const { reservation_id } = req.body.data
     const reservation = await resServices.read(reservation_id);
-    if (reservation) {
+    if (reservation && reservation !== undefined) {
+        res.locals.reservation = reservation;
         next()
     } else if (reservation_id) {
         next({ status: 404, message: `Reservation ${reservation_id} not found` });
@@ -71,15 +72,30 @@ async function resTableValidations(req, res, next) {
     next();
 }
 
+function isSeated(req, res, next) {
+    if (res.locals.reservation.status === "seated") {
+        next({ status: 400, message: "Table is already seated" });
+    }  else {
+        next();
+    }
+}
+
+function isFinished(req, res, next) {
+    if (res.locals.reservation.status === "finished") {
+        next({ status: 400, message: "Table is already finished" });
+    } else {
+        next();
+    }
+}
+
 async function isOccupied(req, res, next) {
-    const { reservation_id } = req.query;
+    const { reservation_id } = req.body.data;
     const { table_id } = req.params;
-    const { available } = await services.getAvailable(table_id, reservation_id ? reservation_id : null);
+    const { available } = await services.getAvailable(table_id, reservation_id)
     if (available) {
         next({ status: 400, message: "Table is not occupied" });
     } 
     next();
-
 }
 
 function getDate() {
@@ -109,7 +125,8 @@ async function list(req, res, next) {
 async function seat(req, res, next) {
     const reservation_id = req.body.data.reservation_id;
     const table_id = req.params.table_id;
-    const data = await seatService(reservation_id, table_id);
+    const data = await services.seat({ reservation_id, table_id, available: false });
+    await resServices.updateStatus(reservation_id, "seated");
     res.json({ data })
 }
 
@@ -134,16 +151,17 @@ async function read(req, res, next) {
 }
 
 async function makeAvailable(req, res, next) {
-    const { reservation_id } = req.query;
+    const { reservation_id } = req.body.data;
     const { table_id } = req.params;
-    const data = await services.makeAvailable(table_id, reservation_id ? reservation_id : null);
-    res.json({data});
+    await services.makeAvailable(table_id, reservation_id);
+    await resServices.updateStatus(reservation_id, "finished");
+    res.sendStatus(200);
 }
 
 module.exports = {
     create: [hasOnlyValidProperties([...VALID_PROPERTIES, "reservation_id"] ), hasRequiredProperties, nameProperLength, isNonzeroNumber, asyncErrorBoundary(create)],
     list: [asyncErrorBoundary(list)],
-    seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), asyncErrorBoundary(seat)],
+    seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), isSeated, isFinished, asyncErrorBoundary(seat)],
     read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],
-    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(isOccupied), asyncErrorBoundary(makeAvailable)],
+    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), isFinished, asyncErrorBoundary(isOccupied), asyncErrorBoundary(makeAvailable)],
 }

@@ -85,10 +85,35 @@ function timeValidations(req, res, next) {
 
 async function resExists(req, res, next) {
   const reservation = await services.read(req.params.reservation_id);
-  if (reservation) {
+  if (reservation !== null && reservation !== undefined) {
+    res.locals.reservation = reservation;
     next()
   } else {
-    next({ status: 404, message: "Reservation not found" });
+    next({ status: 404, message: `Reservation ${req.params.reservation_id} not found` });
+  }
+}
+
+async function createStatusValidation(req, res, next) {
+  const { status } = req.body.data;
+  if (!status || status === "booked") {
+    next();
+  } else {
+    next({status: 400, message: `Reservation status '${status}' is invalid. Status must be 'booked' upon creation`});
+  }
+}
+
+async function statusValidation(req, res, next) {
+  const { status } = req.body.data;
+  const message = [];
+  if (res.locals.reservation.status === "finished") {
+    message.push("Cannot update a reservation with 'finished' status");
+  }
+  else if (status === "booked" || status  === "seated" || status === "finished") {
+    next();
+  } else {
+    message.push("Provided reservation status unknown");
+  } if (message.length) {
+    next({ status: 400, message: message.join("; ") });
   }
 }
 
@@ -107,8 +132,20 @@ async function read(req, res) {
   res.json({ data });
 }
 
+async function updateStatus(req, res) {
+  const { status } = req.body.data;
+  const data = await changeStatus(res.locals.reservation.reservation_id, status);
+  res.json({ data });
+}
+
+async function changeStatus(reservation_id, status) {
+  const data = await services.updateStatus(reservation_id, status);
+  return data[0];
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
-  create: [hasOnlyValidProperties(VALID_PROPERTIES), hasRequiredProperties, isDate, isTime, isNumber, dateValidations, timeValidations, asyncErrorBoundary(create)],
+  create: [hasOnlyValidProperties([...VALID_PROPERTIES, "status"]), hasRequiredProperties, isDate, isTime, isNumber, dateValidations, timeValidations, asyncErrorBoundary(createStatusValidation), asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(resExists), asyncErrorBoundary(read)],
+  updateStatus: [asyncErrorBoundary(resExists), asyncErrorBoundary(statusValidation), asyncErrorBoundary(updateStatus)],
 };
