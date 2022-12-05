@@ -5,6 +5,7 @@ import NewReservation from "../reservations/NewReservation";
 import NewTable from "../tables/NewTable";
 import Seat from "../reservations/Seat";
 import NotFound from "./NotFound";
+import Search from "./Search/Search";
 import { today } from "../utils/date-time";
 
 /**
@@ -34,6 +35,9 @@ function Routes() {
       </Route>
       <Route path="/tables/new">
         <NewTable />
+      </Route>
+      <Route exact={true} path="/search">
+        <Search />
       </Route>
       <Route>
         <NotFound />
