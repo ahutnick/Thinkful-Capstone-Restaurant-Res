@@ -3,6 +3,7 @@ const asyncErrorBoundary = require("../errors/asyncErrorBoundary");
 const hasProperties = require("../errors/hasProperties");
 const hasOnlyValidProperties = require("../errors/hasOnlyValidProperties");
 const P = require("pino");
+const e = require("cors");
 
 /**
  * List handler for reservation resources
@@ -123,8 +124,14 @@ async function create(req, res) {
 }
 
 async function list(req, res) {
-  const data = await services.list(req.query.date ? req.query.date : getDate());
-  res.json({ data });
+  if (req.query && req.query.mobile_number) {
+    const data = await services.search(req.query.mobile_number);
+    res.json({ data });
+    
+  } else {
+    const data = await services.list(req.query.date ? req.query.date : getDate());
+    res.json({ data });
+  }
 }
 
 async function read(req, res) {
