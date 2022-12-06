@@ -150,9 +150,17 @@ async function changeStatus(reservation_id, status) {
   return data[0];
 }
 
+async function update(req, res) {
+  const reservation = req.body.data;
+  const updated = await services.update(reservation);
+  const data = updated[0];
+  res.json({ data });
+}
+
 module.exports = {
   list: asyncErrorBoundary(list),
   create: [hasOnlyValidProperties([...VALID_PROPERTIES, "status"]), hasRequiredProperties, isDate, isTime, isNumber, dateValidations, timeValidations, asyncErrorBoundary(createStatusValidation), asyncErrorBoundary(create)],
   read: [asyncErrorBoundary(resExists), asyncErrorBoundary(read)],
+  update: [asyncErrorBoundary(resExists), hasOnlyValidProperties([...VALID_PROPERTIES, "status", "reservation_id", "created_at", "updated_at"]), hasRequiredProperties, isDate, isTime, isNumber, dateValidations, timeValidations, asyncErrorBoundary(createStatusValidation), asyncErrorBoundary(update)],
   updateStatus: [asyncErrorBoundary(resExists), asyncErrorBoundary(statusValidation), asyncErrorBoundary(updateStatus)],
 };
