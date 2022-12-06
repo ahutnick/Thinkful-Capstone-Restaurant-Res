@@ -109,7 +109,7 @@ async function statusValidation(req, res, next) {
   if (res.locals.reservation.status === "finished") {
     message.push("Cannot update a reservation with 'finished' status");
   }
-  else if (status === "booked" || status  === "seated" || status === "finished") {
+  else if (status === "booked" || status  === "seated" || status === "finished" || status === "cancelled") {
     next();
   } else {
     message.push("Provided reservation status unknown");
