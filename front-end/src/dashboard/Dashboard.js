@@ -67,7 +67,7 @@ function Dashboard({ date }) {
             </div>
             <div className="card-body">
               <ErrorAlert error={reservationsError} />
-              <ReservationTable reservations={reservations} />
+              <ReservationTable reservations={reservations} setReservations={setReservations}/>
             </div>
             <CurrentDateToggle history={history} setCurrentDate={setCurrentDate} currentDate={currentDate}/>
           </div>

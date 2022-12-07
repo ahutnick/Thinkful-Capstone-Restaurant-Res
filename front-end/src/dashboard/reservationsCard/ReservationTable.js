@@ -1,7 +1,7 @@
 import React from "react";
 import Listing from "./Listing";
 
-function ReservationTable({reservations}) {
+function ReservationTable({reservations, setReservations}) {
     return (
         <table className="table table-striped">
             <thead>
@@ -16,7 +16,7 @@ function ReservationTable({reservations}) {
                 </tr>
             </thead>
             <tbody>
-                {reservations.map(reservation => <Listing key={`reservation-${reservation.reservation_id}`} reservation={reservation} />)}
+                {reservations.map(reservation => <Listing key={`reservation-${reservation.reservation_id}`} reservation={reservation} setReservations={setReservations} />)}
             </tbody>
         </table>
     );

@@ -126,3 +126,14 @@ export async function makeAvailable(table_id, data, reservation_date) {
   await fetchJson(url, options);
   return [await listReservations({date: reservation_date}), await listTables({reservation_date})]
 }
+
+export async function cancelReservation(reservation_id, reservation_date) {
+  const url = new URL(`${API_BASE_URL}/reservations/${reservation_id}/status`)
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({data: {status: "cancelled"} })
+  };
+  await fetchJson(url, options);
+  return await listReservations({date: reservation_date});
+}
