@@ -55,7 +55,7 @@ function dateValidations(req, res, next) {
   const errors = []
   if (date.getDay() === 1) {
     errors.push("The restaurant is closed on Tuesdays");
-  } else if (date.getTime() < today.getTime()) {
+  } else if (date.getYear() < today.getYear() || (date.getMonth() < today.getMonth() && date.getYear() <= today.getYear()) || (date.getDate() < today.getDate() && date.getMonth === today.getMonth())) {
     errors.push("Only future reservations are allowed");
   }
   if(errors.length) {
