@@ -137,3 +137,13 @@ export async function cancelReservation(reservation_id, reservation_date) {
   await fetchJson(url, options);
   return await listReservations({date: reservation_date});
 }
+
+export async function updateReservation(data) {
+  const url = new URL(`${API_BASE_URL}/reservations/${data.reservation_id}`);
+  const options = {
+    method: "PUT",
+    headers,
+    body: JSON.stringify({ data })
+  };
+  await fetchJson(url, options);
+}

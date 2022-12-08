@@ -22,6 +22,9 @@ function Listing({reservation, setReservations}) {
                 {reservation.status}
             </td>
             <td>
+                {reservation.status === 'booked' ? <a className="btn btn-warning" href={`/reservations/${reservation.reservation_id}/edit`} role="button">Edit</a> : null}
+            </td>
+            <td>
                 {reservation.status === 'booked' ? <a className="btn btn-info" href={`/reservations/${reservation.reservation_id}/seat`} role="button">Seat</a> : null}
             </td>
             <td>

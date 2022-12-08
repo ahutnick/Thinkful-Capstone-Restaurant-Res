@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import ErrorAlert from "../layout/ErrorAlert";
-import { createReservation } from "../utils/api";
+import { createReservation, updateReservation } from "../utils/api";
 
-function ReservationForm({reservation} = null) {
+function ReservationForm({reservation = null}) {
     const initialFormState = {
         first_name: "",
         last_name: "",
@@ -26,12 +26,17 @@ function ReservationForm({reservation} = null) {
         });
     }
 
-    const handleNewSubmit = async (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
             
         try {
-            const res = await createReservation(formData);
-            history.push(`/dashboard?date=${res.reservation_date}`);  
+            if (formData.reservation_id) {
+                await updateReservation(formData);
+                history.goBack();
+            } else {
+                const res = await createReservation(formData);
+                history.push(`/dashboard?date=${res.reservation_date}`); 
+            } 
         } catch (error) {
             setFormError(error);
         }
@@ -46,7 +51,7 @@ function ReservationForm({reservation} = null) {
         <>
             <ErrorAlert error={formError}/>
 
-            <form onSubmit={handleNewSubmit}>
+            <form onSubmit={handleSubmit}>
                 <label htmlFor="first_name">
                     First Name: 
                 <input 
