@@ -70,7 +70,7 @@ function timeValidations(req, res, next) {
   const time = new Date(`${reservation_date} ${reservation_time}`);
   const now = new Date();
   const errors = [];
-  if (time.getHours() < 9 || (time.getHours() === 9 && time.getMinutes() < 30)) {
+  if (time.getHours() < 10 || (time.getHours() === 10 && time.getMinutes() < 30)) {
     errors.push("Choose a time after the restaurant opens at 9:30 AM");
   } else if (time.getHours() > 21 || (time.getHours() === 21 && time.getMinutes() > 30)) {
     errors.push("Reservations stop at 9:30 PM. Choose another time");
