@@ -59,8 +59,18 @@ function Dashboard({ date }) {
   return (
     <main>
       <h1>Dashboard</h1>
-      <div className="row">
-        <div className="col-7 mb-3">
+        <div className="col-10 mb-3">
+          <div className="card">
+            <div className="card-header">
+              <h4 className="card-title mb-0">Tables</h4>
+            </div>
+            <div className="card-body">
+              <ErrorAlert error={tablesError} />
+              <TablesTable tables={tables} currentDate={currentDate} setTables={setTables} setReservations={setReservations} />
+            </div>
+          </div>
+        </div>
+        <div className="col-10 mb-3">
           <div className="card">
             <div className="card-header">
               <h4 className="card-title mb-0">Reservations for {currentDate}</h4>
@@ -72,18 +82,6 @@ function Dashboard({ date }) {
             <CurrentDateToggle history={history} setCurrentDate={setCurrentDate} currentDate={currentDate}/>
           </div>
         </div>
-        <div className="col-5 mb-3">
-          <div className="card">
-            <div className="card-header">
-              <h4 className="card-title mb-0">Tables</h4>
-            </div>
-            <div className="card-body">
-              <ErrorAlert error={tablesError} />
-              <TablesTable tables={tables} currentDate={currentDate} setTables={setTables} setReservations={setReservations} />
-            </div>
-          </div>
-        </div>
-      </div>
       
     </main>
   );
