@@ -89,6 +89,16 @@ function isFinished(req, res, next) {
 }
 
 async function isOccupied(req, res, next) {
+    const reservation_date = res.locals.reservation.reservation_date;
+    const { table_id } = req.params;
+    const data = await services.isOccupied(table_id, reservation_date);
+    if (data !== undefined && data.available === false) {
+        next({ status: 400, message: "Table is occupied" });
+    }
+    next();
+}
+
+async function isNotOccupied(req, res, next) {
     const { reservation_id } = req.body.data;
     const { table_id } = req.params;
     const { available } = await services.getAvailable(table_id, reservation_id)
@@ -161,7 +171,7 @@ async function makeAvailable(req, res, next) {
 module.exports = {
     create: [hasOnlyValidProperties([...VALID_PROPERTIES, "reservation_id"] ), hasRequiredProperties, nameProperLength, isNonzeroNumber, asyncErrorBoundary(create)],
     list: [asyncErrorBoundary(list)],
-    seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), isSeated, isFinished, asyncErrorBoundary(seat)],
+    seat: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), asyncErrorBoundary(resTableValidations), isSeated, isFinished, isOccupied, asyncErrorBoundary(seat)],
     read: [asyncErrorBoundary(tableExists), asyncErrorBoundary(read)],
-    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), isFinished, asyncErrorBoundary(isOccupied), asyncErrorBoundary(makeAvailable)],
+    makeAvailable: [asyncErrorBoundary(tableExists), asyncErrorBoundary(resExists), isFinished, asyncErrorBoundary(isNotOccupied), asyncErrorBoundary(makeAvailable)],
 }

@@ -29,7 +29,7 @@ function read(tableId) {
 function seat(res_table) {
     return knex("res_tables as rt")
         .insert(res_table)
-        .returning("rt.*")
+        .returning("*")
         .then(createdRecords => createdRecords[0]);
 }
 
@@ -63,7 +63,16 @@ function getAvailable(table_id, reservation_id = null) {
                 return result ? result : { available: true };
             })
     }
-    
+}
+
+function isOccupied(table_id, reservation_date) {
+    return knex("res_tables")
+        .join("reservations", "res_tables.reservation_id", "reservations.reservation_id")
+        .select("res_tables.available")
+        .where("res_tables.table_id", table_id)
+        .andWhere({"res_tables.available": false})
+        .andWhere({"reservations.reservation_date": reservation_date})
+        .first()
 }
 
 function makeAvailable(table_id, reservation_id = null) {
@@ -99,5 +108,6 @@ module.exports = {
     getCapacity,
     getAvailable,
     makeAvailable,
+    isOccupied,
     //res_table_list
 }

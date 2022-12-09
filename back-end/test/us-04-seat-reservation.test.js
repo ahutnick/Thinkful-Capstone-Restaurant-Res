@@ -259,7 +259,7 @@ describe("US-04 - Seat reservation", () => {
         const occupyResponse = await request(app)
           .put(`/tables/${tableOne.table_id}/seat`)
           .set("Accept", "application/json")
-          .send({ data: { reservation_id: 1 } });
+          .send({ data: { reservation_id: 3 } });
 
         expect(occupyResponse.body.error).toBeUndefined();
         expect(occupyResponse.status).toBe(200);
