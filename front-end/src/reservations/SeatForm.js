@@ -36,6 +36,7 @@ function SeatForm({ reservation_id, reservation_date, tables }) {
             <form onSubmit={handleSubmit}>
                 <label htmlFor="table">Table: </label>
                 <select name="table_id" onChange={handleChange}>
+                    <option value="" disabled selected>Select a table</option>
                     {tables.map((table) => <option key={`res-with-table-${table.table_id}`} value={table.table_id}>{table.table_name} - {table.capacity}</option>)}
                 </select>
                 <button className="btn btn-primary" type="submit">Submit</button>
