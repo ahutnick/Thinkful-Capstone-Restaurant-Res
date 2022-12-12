@@ -9,8 +9,55 @@ import { Link } from "react-router-dom";
  */
 
 function Menu() {
+  
   return (
-    <nav className="navbar navbar-dark align-items-start p-0">
+    <>
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+        <Link
+          className="navbar-brand m-0"
+          to="/"
+        > 
+          <div className="sidebar-brand-text mx-3">
+            <span>Periodic Tables</span>
+          </div>
+        </Link>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-supported-content"><span className="navbar-toggler-icon"></span></button>
+        <div className="collapse navbar-collapse" id="navbar-supported-content">
+          <ul className="navbar-nav mr-auto">
+            <li className="nav-item active">
+              <Link className="nav-link" to="/dashboard">
+                <span className="oi oi-dashboard" />
+                &nbsp;Dashboard
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/search">
+                <span className="oi oi-magnifying-glass" />
+                &nbsp;Search
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/reservations/new">
+                <span className="oi oi-plus" />
+                &nbsp;New Reservation
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/tables/new">
+                <span className="oi oi-layers" />
+                &nbsp;New Table
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" to="/search">
+                <span className="oi oi-magnifying-glass" />
+                &nbsp;Search
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    {/* <nav className="navbar navbar-dark align-items-start p-0">
       <div className="container-fluid d-flex flex-column p-0">
         <Link
           className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0"
@@ -55,7 +102,8 @@ function Menu() {
           />
         </div>
       </div>
-    </nav>
+    </nav> */}
+    </>
   );
 }
 
