@@ -31,12 +31,6 @@ function Menu() {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/search">
-                <span className="oi oi-magnifying-glass" />
-                &nbsp;Search
-              </Link>
-            </li>
-            <li className="nav-item">
               <Link className="nav-link" to="/reservations/new">
                 <span className="oi oi-plus" />
                 &nbsp;New Reservation

@@ -3,7 +3,7 @@ import Listing from "./Listing";
 
 function ReservationTable({reservations, setReservations}) {
     return (
-        <table className="table table-striped">
+        <table className="table table-striped table-sm">
             <thead>
                 <tr>
                     <th>Id</th>
