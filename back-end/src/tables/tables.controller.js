@@ -101,8 +101,8 @@ async function isOccupied(req, res, next) {
 async function isNotOccupied(req, res, next) {
     const { reservation_id } = req.body.data;
     const { table_id } = req.params;
-    const { available } = await services.getAvailable(table_id, reservation_id)
-    if (available) {
+    const data = await services.getAvailable(table_id, reservation_id)
+    if (data === undefined || data.available) {
         next({ status: 400, message: "Table is not occupied" });
     } 
     next();
