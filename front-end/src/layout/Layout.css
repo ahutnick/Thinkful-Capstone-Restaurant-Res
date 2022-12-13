@@ -1,3 +1,27 @@
+/* Width < 600px (phone) */
+@media all and (max-width: 600px) {
+  .form-grid {
+    display: grid;
+    grid-template-columns: 40% 50%;
+  }
+}
+
+/*  600px < Width < 1000px (tablet)  */
+@media all and (min-width: 600px) and (max-width: 1000px)  {
+  .form-grid {
+    display: grid;
+    grid-template-columns: 20% 40%;
+  }
+}
+
+/* Width >= 1000px (Desktop) */
+@media all and (min-width: 1000px) {
+  .form-grid {
+    display: grid;
+    grid-template-columns: 15% 20%;
+  }
+}
+
 .side-bar {
   background-color: #393a44;
   min-width: 200px;
