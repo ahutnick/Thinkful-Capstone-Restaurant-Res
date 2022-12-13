@@ -9,7 +9,7 @@ function TablesTable({ tables, currentDate, setTables, setReservations }) {
         <>
             { finishError?<ErrorAlert error = { finishError } /> : null }
 
-            <table className="table table-striped">
+            <table className="table table-striped table-responsive col">
                 <thead>
                     <tr>
                         <th>Table Name</th>
@@ -18,7 +18,7 @@ function TablesTable({ tables, currentDate, setTables, setReservations }) {
                         <th>Res Id</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody className="text-center">
                     {tables.map((table) => <Table key={`table-${table.table_id}`} table={table} currentDate={currentDate} setFinishError={setFinishError} setTables={setTables} setReservations={setReservations} />)}
                 </tbody>
             </table>

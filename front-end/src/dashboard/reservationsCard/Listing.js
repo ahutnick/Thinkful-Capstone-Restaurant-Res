@@ -22,13 +22,13 @@ function Listing({reservation, setReservations}) {
                 {reservation.status}
             </td>
             <td>
-                {reservation.status === 'booked' ? <a className="btn btn-warning" href={`/reservations/${reservation.reservation_id}/edit`} role="button">Edit</a> : null}
+                {reservation.status === 'booked' ? <a className="btn btn-warning btn-sm" href={`/reservations/${reservation.reservation_id}/edit`} role="button">Edit</a> : null}
             </td>
             <td>
-                {reservation.status === 'booked' ? <a className="btn btn-info" href={`/reservations/${reservation.reservation_id}/seat`} role="button">Seat</a> : null}
+                {reservation.status === 'booked' ? <a className="btn btn-info btn-sm" href={`/reservations/${reservation.reservation_id}/seat`} role="button">Seat</a> : null}
             </td>
             <td>
-                {(reservation.status === 'booked' ? <button className="btn btn-secondary" data-reservation-id-cancel={reservation.reservation_id} onClick={cancel}>Cancel</button> : null)}
+                {(reservation.status === 'booked' ? <button className="btn btn-secondary btn-sm" data-reservation-id-cancel={reservation.reservation_id} onClick={cancel}>Cancel</button> : null)}
             </td>
         </tr>
     )

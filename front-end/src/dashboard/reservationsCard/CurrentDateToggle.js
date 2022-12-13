@@ -15,7 +15,7 @@ function CurrentDateToggle({ history, setCurrentDate, currentDate }) {
     }
 
     return (
-        <div className="card-footer">
+        <div className="card-footer text-center">
             <button type="button" className="btn btn-danger mr-3" onClick={goToPrev}>Prev</button>
             <button type="button" className="btn btn-success mr-3" onClick={goToToday}>Today</button>
             <button type="button" className="btn btn-primary" onClick={goToNext}>Next</button>
