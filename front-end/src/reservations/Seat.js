@@ -12,8 +12,10 @@ function Seat() {
 
     useEffect(() => {
         const loadRes = async () => {
+            const abortController = new AbortController()
             const data = await readReservation(reservation_id);
             setReservation(() => data);
+            return () => abortController.abort();
         }
         
         loadRes();   

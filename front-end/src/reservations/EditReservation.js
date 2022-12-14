@@ -9,8 +9,10 @@ function EditReservation() {
 
     useEffect(() => {
         const loadRes = async () => {
-            const data = await readReservation(reservation_id);
+            const abortController = new AbortController()
+            const data = await readReservation(reservation_id, abortController.signal);
             setReservation(() => data);
+            return () => abortController.abort();
         }
 
         loadRes();
