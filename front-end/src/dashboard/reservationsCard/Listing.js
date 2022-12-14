@@ -1,7 +1,7 @@
 import React from "react";
 import { cancelReservation } from "../../utils/api";
 
-function Listing({reservation, setReservations}) {
+function Listing({reservation, setReservations, path}) {
     const cancel = async (event) => {
         event.preventDefault();
         if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
@@ -13,6 +13,7 @@ function Listing({reservation, setReservations}) {
     return (
         <tr>
             <td>{reservation.reservation_id}</td>
+            {path.includes("search") ? <td>{reservation.reservation_date}</td> : null}
             <td>{reservation.last_name}</td>
             <td>{reservation.first_name}</td>
             <td>{reservation.mobile_number}</td>
