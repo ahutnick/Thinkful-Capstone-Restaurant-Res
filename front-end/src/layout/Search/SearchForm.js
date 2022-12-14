@@ -16,15 +16,17 @@ function SearchForm({setResults}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input 
-                id="mobile_number"
-                name="mobile_number"
-                type="text"
-                placeholder="Enter a customer's phone number"
-                onChange={handleChange}
-                value={formData.value}
-            />
-            <button type="submit" className="btn btn-success">Find</button>
+            <div className="search-grid">
+                <input 
+                    id="mobile_number"
+                    name="mobile_number"
+                    type="text"
+                    placeholder="Enter a customer's phone number"
+                    onChange={handleChange}
+                    value={formData.value}
+                />
+                <button type="submit" className="btn btn-success">Find</button>
+            </div>
         </form>
     );
 }
