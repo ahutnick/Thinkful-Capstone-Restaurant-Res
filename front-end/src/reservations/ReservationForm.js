@@ -30,13 +30,15 @@ function ReservationForm({ reservation = null }) {
         event.preventDefault();
 
         try {
+            const abortController = new AbortController();
             if (formData.reservation_id) {
-                await updateReservation(formData);
+                await updateReservation(formData, abortController.signal);
                 history.goBack();
             } else {
-                const res = await createReservation(formData);
+                const res = await createReservation(formData, abortController.signal);
                 history.push(`/dashboard?date=${res.reservation_date}`);
             }
+            return () => abortController.abort();
         } catch (error) {
             setFormError(error);
         }

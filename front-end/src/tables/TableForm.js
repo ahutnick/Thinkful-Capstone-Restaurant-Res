@@ -27,8 +27,10 @@ function TableForm() {
         event.preventDefault();
 
         try {
-            await createTable(formData);
+            const abortController = new AbortController();
+            await createTable(formData, abortController.signal);
             history.push('/dashboard');
+            return () => abortController.abort();
         } catch(error) {
             setFormError(error);
         }

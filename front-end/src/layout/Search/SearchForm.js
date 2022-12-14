@@ -3,11 +3,14 @@ import { listReservations } from "../../utils/api";
 
 function SearchForm({setResults}) {
     const [formData, setFormData] = useState({ mobile_number: "" });
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         const { mobile_number } = formData;
-        const reservations = await listReservations({mobile_number});
+        const abortController = new AbortController();
+        const reservations = await listReservations({mobile_number}, abortController.signal);
         setResults(() => reservations);
+        return () => abortController.abort();
     }
 
     const handleChange = ({target}) => {
