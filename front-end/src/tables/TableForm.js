@@ -44,9 +44,8 @@ function TableForm() {
             <ErrorAlert error={formError} />
 
             <form onSubmit={ handleSubmit }>
-                <label htmlFor="table_name">
-                    Table Name
-
+                <div className="form-group form-grid">
+                <label htmlFor="table_name">Table Name: </label>
                     <input 
                         id="table_name"
                         type="text"
@@ -55,11 +54,9 @@ function TableForm() {
                         onChange={handleChange}
                         value={formData.table_name}
                     />
-                </label>
-                <br />
-                <label htmlFor="capacity">
-                    Capacity
-
+                </div>
+                <div className="form-group form-grid">
+                    <label htmlFor="capacity">Capacity: </label>
                     <input 
                         id="capacity"
                         type="number"
@@ -68,10 +65,11 @@ function TableForm() {
                         onChange={handleChange}
                         value={formData.capacity}
                     />
-                </label>
-                <br />
-                <button className="btn btn-primary" type="submit">Submit</button>
-                <button className="btn btn-danger ml-3" type="button" onClick={handleCancel}>Cancel</button>
+                </div>
+                <div className="button-grid">
+                    <button className="btn btn-primary" type="submit">Submit</button>
+                    <button className="btn btn-secondary" type="button" onClick={handleCancel}>Cancel</button>
+                </div>
             </form>
             
         </>
