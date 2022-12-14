@@ -17,10 +17,10 @@ function EditReservation() {
     }, [reservation_id]);
 
     return (
-        <>
-            <h1>Edit Reservation {reservation ? reservation.reservation_id : null}</h1>
+        <div className="container container-fluid mt-3">
+            <h1 className="display-4">Edit Reservation {reservation ? reservation.reservation_id : null}</h1>
             {reservation ? <ReservationForm reservation={reservation} /> : null}
-        </>
+        </div>
     );
 }
 

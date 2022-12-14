@@ -3,8 +3,8 @@ import ReservationForm from "./ReservationForm";
 
 function NewReservation() {
     return (
-        <div className="container container-fluid">
-            <h1>New</h1>
+        <div className="container container-fluid mt-3">
+            <h1 className="display-4">New Reservation</h1>
             <ReservationForm />
         </div>
     );
