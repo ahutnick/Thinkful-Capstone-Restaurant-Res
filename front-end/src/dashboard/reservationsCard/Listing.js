@@ -1,12 +1,16 @@
 import React from "react";
 import { cancelReservation } from "../../utils/api";
 
-function Listing({reservation, setReservations, path}) {
+function Listing({reservation, setReservations, path, setCancelError}) {
     const cancel = async (event) => {
         event.preventDefault();
-        if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
-            const data = await cancelReservation(reservation.reservation_id, reservation.reservation_date);
-            setReservations(data);
+        try {
+            if (window.confirm("Do you want to cancel this reservation? This cannot be undone.")) {
+                const data = await cancelReservation(reservation.reservation_id, reservation.reservation_date);
+                setReservations(data);
+            }
+        } catch (error) {
+            setCancelError(error);
         }
     }
 

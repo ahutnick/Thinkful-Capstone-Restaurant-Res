@@ -7,17 +7,21 @@ import SeatForm from "./SeatForm";
 function Seat() {
     const [tables, setTables] = useState([]);
     const [tablesError, setTablesError] = useState(null);
+    const [readResError, setReadResError] = useState(null);
     const [reservation, setReservation] = useState(null);
     const { reservation_id } = useParams();
 
     useEffect(() => {
         const loadRes = async () => {
-            const abortController = new AbortController()
-            const data = await readReservation(reservation_id);
-            setReservation(() => data);
-            return () => abortController.abort();
+            try {
+                const abortController = new AbortController()
+                const data = await readReservation(reservation_id);
+                setReservation(() => data);
+                return () => abortController.abort();
+            } catch(error) {
+                setReadResError(error);
+            }   
         }
-        
         loadRes();   
     }, [reservation_id]);
     useEffect(loadTables, [reservation]);
@@ -36,6 +40,7 @@ function Seat() {
 
     return (
         <div className = "container container-fluid mt-3">
+            <ErrorAlert error={readResError} />
             <ErrorAlert error={tablesError} />
             <h1 className="display-4">Seat </h1>
 
