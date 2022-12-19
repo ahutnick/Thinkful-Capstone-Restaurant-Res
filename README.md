@@ -1,6 +1,6 @@
 # Hutnick Thinkful Capstone - Periodic Tables: Restaurant Reservation System
 
-##[Periodic Tables](https://cap-restaurant-res-client.herokuapp.com/)
+## [Periodic Tables](https://cap-restaurant-res-client.herokuapp.com/)
 
 ## Summary
 This repository contains the server and client files for the Restaurant Reservation System titled Periodic Tables. This system allows restaurants to store tables with a given name and capacity, store reservations with a given date, time, first and last name, and party size, and seat the reservation at a table on a given date. 
