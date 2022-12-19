@@ -19,13 +19,6 @@ function read(resId) {
     return knex("reservations").select("*").where({ reservation_id: resId }).first();
 }
 
-function updateStatus(resId, status) {
-    return knex("reservations")
-        .where({reservation_id: resId})
-        .update({ status: status })
-        .returning("*")
-}
-
 function search(mobile_number) {
     return knex("reservations")
         .whereRaw(
@@ -40,6 +33,13 @@ function update(reservation) {
         .select("*")
         .where("reservation_id", reservation.reservation_id)
         .update(reservation, "*")
+}
+
+function updateStatus(resId, status) {
+    return knex("reservations")
+        .where({ reservation_id: resId })
+        .update({ status: status })
+        .returning("*")
 }
 
 module.exports = {
