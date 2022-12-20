@@ -1,26 +1,6 @@
 # Hutnick Thinkful Capstone - Periodic Tables: Restaurant Reservation System
 
 ## [Periodic Tables](https://cap-restaurant-res-client.herokuapp.com/)
-
-## Screenshots
-Dashboard
-![Dashboard](/readme_images/readme_dashboard.png)
-
-New Reservation
-![New_Reservation](/readme_images/readme_new_res.png)
-
-Edit Reservation
-![Edit_Reservation](/readme_images/readme_edit_reservation.png)
-
-Seat Reservation
-![Seat](/readme_images/readme_seat.png)
-
-New Table
-![New_Table](/readme_images/readme_new_table.png)
-
-Search
-![Search](/readme_images/readme_search.png)
-
 ## Summary
 This repository contains the server and client files for the Restaurant Reservation System titled Periodic Tables. This system allows restaurants to store tables with a given name and capacity, store reservations with a given date, time, first and last name, and party size, and seat the reservation at a table on a given date. 
 
@@ -154,3 +134,21 @@ Validations:
 
 ## Installation
 Download the repository and run `npm i` in the command line. Then, run `npm start` to run both the server and the client.
+## Screenshots
+### Dashboard
+![Dashboard](/readme_images/readme_dashboard.png)
+
+### New Reservation
+![New_Reservation](/readme_images/readme_new_res.png)
+
+### Edit Reservation
+![Edit_Reservation](/readme_images/readme_edit_reservation.png)
+
+### Seat Reservation
+![Seat](/readme_images/readme_seat.png)
+
+### New Table
+![New_Table](/readme_images/readme_new_table.png)
+
+### Search
+![Search](/readme_images/readme_search.png)
