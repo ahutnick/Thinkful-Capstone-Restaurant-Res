@@ -4,22 +4,22 @@
 
 ## Screenshots
 Dashboard
-![Dashboard] (/readme_images/readme_dashboard.png)
+![Dashboard](/readme_images/readme_dashboard.png)
 
 New Reservation
-![New_Reservation] (/readme_images/readme_new_res.png)
+![New_Reservation](/readme_images/readme_new_res.png)
 
 Edit Reservation
-![Edit_Reservation] (/readme_images/readme_edit_reservation.png)
+![Edit_Reservation](/readme_images/readme_edit_reservation.png)
 
 Seat Reservation
-![Seat] (/readme_images/readme_seat.png)
+![Seat](/readme_images/readme_seat.png)
 
 New Table
-![New_Table] (/readme_images/readme_new_table.png)
+![New_Table](/readme_images/readme_new_table.png)
 
 Search
-![Search] (/readme_images/readme_search.png)
+![Search](/readme_images/readme_search.png)
 
 ## Summary
 This repository contains the server and client files for the Restaurant Reservation System titled Periodic Tables. This system allows restaurants to store tables with a given name and capacity, store reservations with a given date, time, first and last name, and party size, and seat the reservation at a table on a given date. 
