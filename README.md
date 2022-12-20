@@ -33,8 +33,8 @@ This table allows for a many to many relationship between reservations and the t
 - available - boolean - indicates whether the listed table is currently free or occupied
 
 ## API
-### "/reservations" Routes
-#### "/"
+### /reservations Routes
+#### /
 ##### GET list
 List all reservations that match the given parameters. If a mobile number or part of a mobile number is provided in the data sent, then all reservations with a matching number will be returned. Otherwise, if a date is provided in the data sent, all reservations on that date will be returned.
 
@@ -51,7 +51,7 @@ Validations:
 - Reservations cannot be made in the past (date and/or time)
 - Reservation status must be "booked" upon creation 
 
-#### "/:reservation_id"
+#### /:reservation_id
 
 ##### GET read
 Returns the reservation with the corresponding id.
@@ -72,7 +72,7 @@ Validations:
 - Reservations cannot be made in the past (date and/or time)
 - Reservation status must be "booked"
 
-#### "/:reservation_id/status"
+#### /:reservation_id/status
 
 ##### PUT update status
 Updates the status of the reservation with the corresponding identification number
@@ -81,8 +81,8 @@ Validations:
 - The reservation exists
 - The provided status is either "booked", "seated", "finished", or "cancelled"
 
-### "/tables" Routes
-#### "/"
+### /tables Routes
+#### /
 ##### GET list
 List all tables and determine availability of each using the reservation_date provided in the query portion of the request.
 
@@ -95,13 +95,13 @@ Validations:
 - Table name must be at least 2 characters
 - Capacity must be a positive nonzero integer
 
-#### "/:table_id"
+#### /:table_id
 ##### GET read
 Returns the table with the corresponding id.
 
 Validations:
 - The table exists
-#### "/:table_id/seat"
+#### /:table_id/seat
 ##### PUT seat
 Seats the specified reservation at the provided table, creating an entry in the res_tables table and setting the availability of that table to "false" for that date.
 
