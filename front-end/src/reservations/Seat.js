@@ -39,12 +39,16 @@ function Seat() {
     }
 
     return (
-        <div className = "container container-fluid mt-3">
+        <div className= "container container-fluid mt-4 col-md-7 col-lg-4">
             <ErrorAlert error={readResError} />
             <ErrorAlert error={tablesError} />
-            <h1 className="display-4">Seat </h1>
+            <div className="card">
+                <div className="card-header">
+            <h1 className="display-5">Seat </h1>
+                </div>
 
             {reservation ? <SeatForm reservation_id={reservation_id} reservation_date={reservation.reservation_date} tables={tables} />  : null}
+            </div>
         </div>
     )
 }

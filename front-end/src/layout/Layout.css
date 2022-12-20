@@ -2,12 +2,12 @@
 @media all and (max-width: 600px) {
   .form-grid {
     display: grid;
-    grid-template-columns: 40% 50%;
+    grid-template-columns: 50% 50%;
   }
 
   .button-grid {
     display: grid;
-    grid-template-columns: 30% 30%;
+    grid-template-columns: 35% 35%;
     column-gap: 30%;
     margin-top: 5%;
   }
@@ -20,6 +20,10 @@
     margin-bottom: 10%;
   }
 
+  .sm-collapse {
+    display: none;
+  }
+
   form {
     margin-top: 5%;
     grid-template-columns: 40% 50%;
@@ -27,17 +31,21 @@
 }
 
 /*  600px < Width < 1000px (tablet)  */
-@media all and (min-width: 600px) and (max-width: 1000px)  {
+@media all and (min-width: 600px) and (max-width: 1000px) {
   .form-grid {
     display: grid;
-    grid-template-columns: 20% 40%;
+    grid-template-columns: 40% 45%;
   }
 
   .button-grid {
     display: grid;
-    grid-template-columns: 20% 20%;
+    grid-template-columns: 40% 40%;
     column-gap: 20%;
     margin-top: 5%;
+  }
+
+  .mid-collapse {
+    display: none;
   }
 
   .search-grid {
@@ -59,7 +67,7 @@
 @media all and (min-width: 1000px) {
   .form-grid {
     display: grid;
-    grid-template-columns: 15% 20%;
+    grid-template-columns: 35% 55%;
   }
 
   form {
@@ -68,8 +76,8 @@
 
   .button-grid {
     display: grid;
-    grid-template-columns: 15% 15%;
-    column-gap: 5%;
+    grid-template-columns: 45% 45%;
+    column-gap: 10%;
     margin-top: 2%;
   }
 

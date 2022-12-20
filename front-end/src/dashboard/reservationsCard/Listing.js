@@ -14,16 +14,18 @@ function Listing({reservation, setReservations, path, setCancelError}) {
         }
     }
 
+    const time = (reservation.reservation_time).slice(0, -3);
+
     return (
         <tr>
             <td>{reservation.reservation_id}</td>
             {path.includes("search") ? <td>{reservation.reservation_date}</td> : null}
             <td>{reservation.last_name}</td>
-            <td>{reservation.first_name}</td>
+            <td className="sm-collapse mid-collapse">{reservation.first_name}</td>
             <td>{reservation.mobile_number}</td>
-            <td>{reservation.reservation_time}</td>
+            <td>{time}</td>
             <td>{reservation.people}</td>
-            <td data-reservation-id-status={reservation.reservation_id}>
+            <td data-reservation-id-status={reservation.reservation_id} className="sm-collapse mid-collapse">
                 {reservation.status}
             </td>
             <td>

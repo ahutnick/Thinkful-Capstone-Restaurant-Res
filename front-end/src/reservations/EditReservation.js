@@ -24,10 +24,14 @@ function EditReservation() {
     }, [reservation_id]);
 
     return (
-        <div className="container container-fluid mt-3">
+        <div className="container container-fluid mt-4 col-md-7 col-lg-4">
             <ErrorAlert error={readResErrors} />
-            <h1 className="display-4">Edit Reservation {reservation ? reservation.reservation_id : null}</h1>
-            {reservation ? <ReservationForm reservation={reservation} /> : null}
+            <div className="card">
+                <div className="card-header">
+                    <h1 className="display-5">Edit Reservation {reservation ? reservation.reservation_id : null}</h1>
+                </div>
+                {reservation ? <ReservationForm reservation={reservation} /> : null}
+            </div>
         </div>
     );
 }

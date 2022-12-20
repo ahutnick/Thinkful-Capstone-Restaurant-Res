@@ -9,12 +9,12 @@ function TablesTable({ tables, currentDate, setTables, setReservations }) {
         <>
             { finishError?<ErrorAlert error = { finishError } /> : null }
 
-            <table className="table table-striped table-responsive col">
+            <table className="table table-striped table-responsive-sm col">
                 <thead>
                     <tr>
-                        <th>Table Name</th>
-                        <th>Capacity</th>
-                        <th>Available</th>
+                        <th>Name</th>
+                        <th>Cap.</th>
+                        <th>Avail.</th>
                         <th>Res Id</th>
                     </tr>
                 </thead>

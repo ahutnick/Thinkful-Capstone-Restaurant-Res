@@ -34,6 +34,7 @@ function SeatForm({ reservation_id, reservation_date, tables }) {
             <ErrorAlert error={formError} />
 
             <form onSubmit={handleSubmit}>
+                <div className="card-body">
                     <div className="form-group form-grid">
                         <label htmlFor="table">Select Table: </label>
                     
@@ -42,10 +43,13 @@ function SeatForm({ reservation_id, reservation_date, tables }) {
                             {tables.map((table) => <option key={`res-with-table-${table.table_id}`} value={table.table_id}>{table.table_name} - {table.capacity}</option>)}
                         </select>
                     </div>
+                </div>
+                <div className="card-footer">
                     <div className="button-grid">
                         <button className="btn btn-primary" type="submit">Submit</button>
-                        <button className="btn btn-danger ml-3" type="button" onClick={handleCancel}>Cancel</button>
+                        <button className="btn btn-secondary ml-3" type="button" onClick={handleCancel}>Cancel</button>
                     </div>  
+                </div>
             </form>
         </>
     )
