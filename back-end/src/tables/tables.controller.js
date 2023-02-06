@@ -16,7 +16,9 @@ async function listAvailability(req, res, next) {
     const availability = new Map();
     data.forEach(obj => {
         const { table_id, available, reservation_id } = obj;
-        availability.set(table_id, { available, reservation_id });
+        if (!availability.has(table_id)) {
+            availability.set(table_id, { available, reservation_id });
+        }
     });
     return availability;
 }
