@@ -58,8 +58,9 @@ async function isNotOccupied(req, res, next) {
 
 async function isOccupied(req, res, next) {
     const reservation_date = res.locals.reservation.reservation_date;
+    const reservation_time = res.locals.reservation.reservation_time;
     const { table_id } = req.params;
-    const data = await services.isOccupied(table_id, reservation_date);
+    const data = await services.isOccupied(table_id, reservation_date, reservation_time);
     if (data !== undefined && data.available === false) {
         next({ status: 400, message: "Table is occupied" });
     }

@@ -65,13 +65,22 @@ function seat(res_table) {
         .then(createdRecords => createdRecords[0]);
 }
 
-function isOccupied(table_id, reservation_date) {
+function isOccupied(table_id, reservation_date, reservation_time) {
+    // Find minimum and maximum times to ensure tables can be seated in 2 hour intervals
+    const date = `${reservation_date.getFullYear()}-${reservation_date.getMonth() + 1}-${reservation_date.getDate()}`
+    const res_time = new Date(`${date} ${reservation_time}`);
+    res_time.setMinutes(res_time.getMinutes() - 119);
+    const min_time = `${res_time.getHours()}:${res_time.getMinutes()}:00`;
+    res_time.setMinutes(res_time.getMinutes() + 238);
+    const max_time = `${res_time.getHours()}:${res_time.getMinutes()}:00`;
+
     return knex("res_tables")
         .join("reservations", "res_tables.reservation_id", "reservations.reservation_id")
         .select("res_tables.available")
         .where("res_tables.table_id", table_id)
         .andWhere({ "res_tables.available": false })
         .andWhere({ "reservations.reservation_date": reservation_date })
+        .whereBetween("reservations.reservation_time", [min_time, max_time])
         .first()
 }
 

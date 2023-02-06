@@ -268,11 +268,55 @@ describe("US-04 - Seat reservation", () => {
         const doubleAssignResponse = await request(app)
           .put(`/tables/${tableOne.table_id}/seat`)
           .set("Accept", "application/json")
-          .send({ data: { reservation_id: 2 } });
+          .send({ data: { reservation_id: 6 } });
 
         expect(doubleAssignResponse.body.error).toContain("occupied");
         expect(doubleAssignResponse.status).toBe(400);
       });
+
+      test("returns 200 if table is occupied two hours prior", async () => {
+        expect(tableOne).not.toBeUndefined();
+
+        // first, occupy the table
+        const occupyResponse = await request(app)
+          .put(`/tables/${tableOne.table_id}/seat`)
+          .set("Accept", "application/json")
+          .send({ data: { reservation_id: 3 } });
+
+        expect(occupyResponse.body.error).toBeUndefined();
+        expect(occupyResponse.status).toBe(200);
+
+        // assign table to reservation at 20:00
+        const laterAssign = await request(app)
+          .put(`/tables/${tableOne.table_id}/seat`)
+          .set("Accept", "application/json")
+          .send({ data: { reservation_id: 2 } });
+
+        expect(laterAssign.body.error).toBeUndefined();
+        expect(laterAssign.status).toBe(200);
+      });
+
+      test("returns 200 if table is occupied two hours after", async () => {
+        expect(tableOne).not.toBeUndefined();
+
+        // first, occupy the table
+        const occupyResponse = await request(app)
+          .put(`/tables/${tableOne.table_id}/seat`)
+          .set("Accept", "application/json")
+          .send({ data: { reservation_id: 3 } });
+
+        expect(occupyResponse.body.error).toBeUndefined();
+        expect(occupyResponse.status).toBe(200);
+
+        // assign table to reservation at 20:00
+        const laterAssign = await request(app)
+          .put(`/tables/${tableOne.table_id}/seat`)
+          .set("Accept", "application/json")
+          .send({ data: { reservation_id: 7 } });
+
+        expect(laterAssign.body.error).toBeUndefined();
+        expect(laterAssign.status).toBe(200);
+      })
     });
   });
 });
