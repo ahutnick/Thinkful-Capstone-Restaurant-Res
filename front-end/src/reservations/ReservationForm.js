@@ -36,7 +36,7 @@ function ReservationForm({ reservation = null }) {
                 history.goBack();
             } else {
                 const res = await createReservation(formData, abortController.signal);
-                history.push(`/dashboard?date=${res.reservation_date}`);
+                history.push(`/dashboard?date=${res.reservation_date.split("T")[0]}`);
             }
             return () => abortController.abort();
         } catch (error) {
