@@ -16,7 +16,7 @@ function Listing({reservation, setReservations, path, setCancelError}) {
 
     const time = (reservation.reservation_time).slice(0, -3);
 
-    return (
+    return reservation.status !== "cancelled" ? (
         <tr>
             <td>{reservation.reservation_id}</td>
             {path.includes("search") ? <td>{reservation.reservation_date}</td> : null}
@@ -38,7 +38,7 @@ function Listing({reservation, setReservations, path, setCancelError}) {
                 {(reservation.status === 'booked' ? <button className="btn btn-secondary btn-sm" data-reservation-id-cancel={reservation.reservation_id} onClick={cancel}>Cancel</button> : null)}
             </td>
         </tr>
-    )
+    ) : null
 }
 
 export default Listing;
