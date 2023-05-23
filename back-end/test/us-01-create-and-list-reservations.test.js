@@ -378,9 +378,9 @@ describe("US-01 - Create and list reservations", () => {
         .get("/reservations?date=2020-12-30")
         .set("Accept", "application/json");
 
-      expect(response.body.data).toHaveLength(2);
-      expect(response.body.data[0].first_name).toBe("Bird");
-      expect(response.body.data[1].first_name).toBe("Frank");
+      expect(response.body.data).toHaveLength(4);
+      expect(response.body.data[0].first_name).toBe("Tulip");
+      expect(response.body.data[1].first_name).toBe("Bird");
       expect(response.status).toBe(200);
     });
   });
